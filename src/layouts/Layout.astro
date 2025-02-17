@@ -1,6 +1,9 @@
 ---
+import { string } from 'astro:schema';
+import Header from '../components/Header.astro';
+
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -8,44 +11,204 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=400" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-black font-roboto-mono leading-normal text-neutral-300">
+    <Header />
+    <slot />
+    <footer
+      class="border-t border-t-neutral-500 px-gutter-x pb-gutter-y-0.5 pt-gutter-y-2"
+    >
+      <div class="grid gap-x-gutter-x gap-y-gutter-y lg:grid-cols-6">
+        <a href="/" class="place-self-start lg:col-span-2">
+          <img
+            src="/images/logo.svg"
+            alt="AI Coloso"
+            width="104"
+            height="32"
+            decoding="async"
+          /></a
+        >
+        <nav class="lg:col-span-4" aria-label="Footer menu">
+          <ul class="grid grid-cols-2 gap-x-gutter-x lg:grid-cols-4">
+            {
+              [
+                {
+                  label: 'News',
+                  href: '/news/',
+                  className: 'row-span-4',
+                  children: [
+                    {
+                      label: 'Technology',
+                      href: '/news/technology/',
+                    },
+                    {
+                      label: 'Research',
+                      href: '/news/research/',
+                    },
+                    {
+                      label: 'Business',
+                      href: '/news/business/',
+                    },
+                    {
+                      label: 'Innovation',
+                      href: '/news/innovation/',
+                    },
+                    {
+                      label: 'Industry',
+                      href: '/news/industry/',
+                    },
+                  ],
+                },
+                {
+                  label: 'Products',
+                  href: '/product/',
+                  className: 'row-span-4',
+                  children: [
+                    {
+                      label: 'AI Assistant',
+                      href: '/product/ai assistant/',
+                    },
+                    {
+                      label: 'AI Analytics',
+                      href: '/product/ai analytics/',
+                    },
+                    {
+                      label: 'AI Chatbots',
+                      href: '/product/ai chatbots/',
+                    },
+                  ],
+                },
+                {
+                  label: 'About Us',
+                  href: '/about us/',
+                  className: 'row-span-4 mt-gutter-y lg:mt-0',
+                  children: [
+                    {
+                      label: 'Our Mission',
+                      href: '/about us/our mission/',
+                    },
+                    {
+                      label: 'Our Team',
+                      href: '/about us/our team/',
+                    },
+                    {
+                      label: 'Company Information',
+                      href: '/about us/company information/',
+                    },
+                  ],
+                },
+                {
+                  label: 'Careers',
+                  href: '/careers/',
+                  className: 'mt-gutter-y lg:mt-0',
+                },
+                {
+                  label: 'Terms & Policies',
+                  href: '/terms & Policies/',
+                  className: 'col-start-2 lg:col-start-4',
+                },
+                {
+                  label: 'Privacy Policy',
+                  href: '/privacy Policy/',
+                  className: 'col-start-2 lg:col-start-4',
+                },
+              ].map(({ label, href, children, className }) => {
+                return (
+                  <li class={className}>
+                    <a
+                      class="js-type-shuffle inline-block py-[0.3125rem] font-medium transition-colors duration-100 ease-out hover:text-green-500"
+                      href={href}
+                    >
+                      {label}
+                    </a>
+                    {children && (
+                      <ul>
+                        {children.map(({ label, href }) => {
+                          return (
+                            <li>
+                              <a
+                                class="js-type-shuffle inline-block py-[0.3125rem] text-neutral-500 transition-colors duration-100 ease-out hover:text-green-500"
+                                href={href}
+                              >
+                                {label}
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </nav>
+      </div>
+      <a
+        class="js-type-shuffle mt-gutter-y flex flex-wrap justify-center whitespace-nowrap text-[16vw] font-medium leading-none tracking-[-0.03em] text-white transition-colors duration-100 ease-out hover:text-green-500 lg:flex-nowrap lg:gap-x-gutter-y lg:text-[8vw]"
+        href="/contact"
+        >Contact Us
+        <span aria-hidden="true">---------&gt;</span>
+      </a>
+      <div class="-mx-gutter-x mt-gutter-y overflow-hidden">
+        <p
+          class="flex w-fit animate-[marquee_3750ms_linear_infinite] text-[max(1vw,1rem)] [--translate-x:-10%]"
+        >
+          {
+            [...Array(10)].map((_, i) => {
+              return (
+                <span class="mr-[1em] whitespace-nowrap" aria-hidden={i !== 0}>
+                  © 2023 AI Coloso.
+                </span>
+              );
+            })
+          }
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
+<style is:global></style>
+
+<script>
+  import { TypeShuffle } from '../scripts/typeShuffle';
+
+  const textElements = document.querySelectorAll('.js-type-shuffle');
+
+  textElements.forEach((textElement) => {
+    const ts = new TypeShuffle(textElement);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('invisible');
+            const maxCellIterations = parseInt(
+              entry.target.getAttribute('data-max-cell-iterations') || '5'
+            );
+            ts.trigger('fx6', maxCellIterations);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin: '0px 0px -10px 0px',
+      }
+    );
+
+    observer.observe(textElement);
+  });
+</script>
